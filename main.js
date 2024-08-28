@@ -22,11 +22,25 @@ async function setupAudioProcessing() {
     microphone.connect(volumeNode);
 
     // メッセージを受け取るためにvolumeNodeのポートを使用
+
+    let isVolumeUpdating = true;
+    setTimeout(() => {
+      isVolumeUpdating = false;
+    }, 2000);
+    let maxVolume = 0;
+
     volumeNode.port.onmessage = (event) => {
+      const volume = event.data.volume;
+      // 2秒以内 && 最大音量更新 && 外れ値の除外
+      if (isVolumeUpdating && maxVolume < volume && volume < 2.0) {
+        maxVolume = volume;
+        console.log(maxVolume)
+      }
+
       if (!isVolumeDetectionActive) return;
 
-      const volume = event.data.volume;
-      const threshold = 0.3; // 閾値を設定
+      const threshold = maxVolume + 0.5; // 閾値を設定
+      console.log("MaxVolume", threshold);
 
       // 閾値を超えた場合、2つ目の動画を再生
       if (volume > threshold) {
@@ -43,7 +57,6 @@ async function setupAudioProcessing() {
     const video1 = document.getElementById("video1");
     video1.setAttribute("autoplay", "");
     video1.play();
-
   } catch (error) {
     console.error("マイクへのアクセスが拒否されました: ", error);
   }
