@@ -3,11 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>音量検出デモ</title>
+    <link rel="stylesheet" href="./style.css" />
+    <title>音量検出と動画再生デモ</title>
   </head>
   <body>
-    <h1>マイクに息を吹き替えるとテキストが表示されます</h1>
-    <div id="message" style="display: none; font-size: 2em; color: red">閾値(0.03)を超えました！</div>
+    <h1>動画再生と音量検出デモ</h1>
+    <p id="announce" style="display: none; font-size: 2em">息を吹きかけて下さい</p>
+
+    <!-- 1つ目の動画 -->
+    <div class="video_wrapper">
+      <video id="video1" width="600" autoplay muted playsinline>
+        <source src="./videos/coffee.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <!-- 2つ目の動画 -->
+    <div class="video_wrapper">
+      <video id="video2" width="600" autoplay muted playsinline style="display: none">
+        <source src="./videos/sample_fog.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div class="message_wrapper">
+      <p id="message" style="display: none; font-size: 2em; color: black">メッセージを表示</p>
+    </div>
+
     <script src="main.js" type="module"></script>
   </body>
 </html>
