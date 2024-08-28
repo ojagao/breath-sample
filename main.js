@@ -39,6 +39,11 @@ async function setupAudioProcessing() {
         document.getElementById("message").style.display = "none";
       }
     };
+
+    const video1 = document.getElementById("video1");
+    video1.setAttribute("autoplay", "");
+    video1.play();
+
   } catch (error) {
     console.error("マイクへのアクセスが拒否されました: ", error);
   }
