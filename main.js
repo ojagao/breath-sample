@@ -26,7 +26,7 @@ async function setupAudioProcessing() {
       if (!isVolumeDetectionActive) return;
 
       const volume = event.data.volume;
-      const threshold = 0.1; // 閾値を設定
+      const threshold = 0.3; // 閾値を設定
 
       // 閾値を超えた場合、2つ目の動画を再生
       if (volume > threshold) {
