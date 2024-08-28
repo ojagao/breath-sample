@@ -26,20 +26,31 @@ async function setupAudioProcessing() {
     let isVolumeUpdating = true;
     setTimeout(() => {
       isVolumeUpdating = false;
-    }, 2000);
+    }, 4000);
     let maxVolume = 0;
+
+    let thresholdBase = 0.1; // デフォルトの閾値をAndroid用に設定
+
+    // ユーザーエージェントをチェックして閾値を設定
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      thresholdBase = 0.5;
+      console.log("iPhone!");
+    } else if (/Android/i.test(navigator.userAgent)) {
+      thresholdBase = 0.2; // Androidの場合
+      console.log("Android!");
+    }
 
     volumeNode.port.onmessage = (event) => {
       const volume = event.data.volume;
       // 2秒以内 && 最大音量更新 && 外れ値の除外
       if (isVolumeUpdating && maxVolume < volume && volume < 2.0) {
         maxVolume = volume;
-        console.log(maxVolume)
+        console.log(maxVolume);
       }
 
       if (!isVolumeDetectionActive) return;
 
-      const threshold = maxVolume + 0.5; // 閾値を設定
+      const threshold = maxVolume + thresholdBase; // 閾値を設定
       console.log("MaxVolume", threshold);
 
       // 閾値を超えた場合、2つ目の動画を再生
