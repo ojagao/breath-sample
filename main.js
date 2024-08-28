@@ -26,7 +26,7 @@ async function setupAudioProcessing() {
     let isVolumeUpdating = true;
     setTimeout(() => {
       isVolumeUpdating = false;
-    }, 4000);
+    }, 2000);
     let maxVolume = 0;
 
     let thresholdBase = 0.1; // デフォルトの閾値をAndroid用に設定
